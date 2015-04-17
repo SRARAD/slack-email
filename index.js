@@ -62,7 +62,7 @@ mailin.on('message', function (connection, data, content) {
 function getUser(data) {
 	var from = data.from[0].address;
 	var usernameArray = Object.keys(emailObj).filter(function(d) {
-		return emailObj[d].indexOf(from) != -1;
+		return emailObj[d].indexOf(from.toLowerCase()) != -1;
 	});
 	if (usernameArray.length == 1) {
 		return usernameArray[0];
