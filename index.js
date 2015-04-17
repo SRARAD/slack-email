@@ -35,7 +35,7 @@ mailin.on('startMessage', function (connection) {
 mailin.on('message', function (connection, data, content) {
 	var slackUrl = fs.readFileSync('webhook.txt').toString();
 	var token = fs.readFileSync('rad.txt').toString().replace(/(\r\n|\n|\r)/gm,"");
-	var channelNames = ['testing'];
+	var channelNames = getChannelNames(data);
 	request.post(
 		'https://slack.com/api/channels.list',
 		function (error, response, body) {
@@ -53,6 +53,19 @@ mailin.on('message', function (connection, data, content) {
 		token: token
 	});
 });
+
+function getChannelNames(data) {
+	var allRecipients = data.to.concat(data.cc);
+	var allEmails = allRecipients.map(function(d) {
+		return d.address
+	});
+	var validEmails = allEmails.filter(function(d) {
+	});
+	var channelNames = validEmails.map(function(d) {
+		return d.split('@')[0];
+	});
+	return channelNames;
+}
 
 function postFile(token, data, channelIds) {
 	request.post(
