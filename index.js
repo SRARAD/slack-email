@@ -34,19 +34,34 @@ mailin.on('startMessage', function (connection) {
 /* Event emitted after a message was received and parsed. */
 mailin.on('message', function (connection, data, content) {
 	var slackUrl = fs.readFileSync('webhook.txt').toString();
-	var slackData = {
-		text: data.text
-	};
-	console.log(slackData);
+	var token = fs.readFileSync('rad.txt').toString().replace(/(\r\n|\n|\r)/gm,"");
+	var channelNames = ['testing'];
 	request.post(
-		slackUrl,
+		'https://slack.com/api/channels.list',
 		function (error, response, body) {
-			console.log(body)
 			if (!error && response.statusCode == 200) {
-				console.log(body)
+				var channels = JSON.parse(body).channels;
+				var channelIds = channels.filter(function(d) {
+					return channelNames.indexOf(d.name) != -1;
+				}).map(function(d) {
+					return d.id;
+				});
+				postFile(token, data, channelIds)
 			}
 		}
 	).form({
-		payload: JSON.stringify(slackData)
+		token: token
 	});
 });
+
+function postFile(token, data, channelIds) {
+	request.post(
+		'https://slack.com/api/files.upload'
+	).form({
+		token: token,
+		content: data.text,
+		title: data.subject,
+		filetype: 'txt',
+		channels: channelIds.join(',')
+	});
+}
