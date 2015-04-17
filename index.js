@@ -1,6 +1,12 @@
 var mailin = require('mailin');
 var fs = require('fs');
 var request = require('request');
+
+var emailObj = {
+	],
+	]/*,
+	]*/
+};
     
 /* Start the Mailin server. The available options are:
  *  options = {
@@ -33,7 +39,7 @@ mailin.on('startMessage', function (connection) {
 
 /* Event emitted after a message was received and parsed. */
 mailin.on('message', function (connection, data, content) {
-	var token = fs.readFileSync('rad.txt').toString().replace(/(\r\n|\n|\r)/gm,"");
+	var token = fs.readFileSync('rad/' + getUser(data)).toString().replace(/(\r\n|\n|\r)/gm,"");
 	var channelNames = getChannelNames(data);
 	request.post(
 		'https://slack.com/api/channels.list',
@@ -52,6 +58,18 @@ mailin.on('message', function (connection, data, content) {
 		token: token
 	});
 });
+
+function getUser(data) {
+	var from = data.from[0].address;
+	var usernameArray = Object.keys(emailObj).filter(function(d) {
+		return emailObj[d].indexOf(from) != -1;
+	});
+	if (usernameArray.length == 1) {
+		return usernameArray[0];
+	} else {
+		return defaultUser;
+	}
+}
 
 function getChannelNames(data) {
 	var allRecipients = data.to.concat(data.cc);
