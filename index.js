@@ -1,4 +1,6 @@
 var mailin = require('mailin');
+var fs = require('fs');
+var request = require('request');
     
 /* Start the Mailin server. The available options are:
  *  options = {
@@ -31,5 +33,20 @@ mailin.on('startMessage', function (connection) {
 
 /* Event emitted after a message was received and parsed. */
 mailin.on('message', function (connection, data, content) {
-	console.log(data);
+	var slackUrl = fs.readFileSync('webhook.txt').toString();
+	var slackData = {
+		text: data.text
+	};
+	console.log(slackData);
+	request.post(
+		slackUrl,
+		function (error, response, body) {
+			console.log(body)
+			if (!error && response.statusCode == 200) {
+				console.log(body)
+			}
+		}
+	).form({
+		payload: JSON.stringify(slackData)
+	});
 });
