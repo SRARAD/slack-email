@@ -33,7 +33,6 @@ mailin.on('startMessage', function (connection) {
 
 /* Event emitted after a message was received and parsed. */
 mailin.on('message', function (connection, data, content) {
-	var slackUrl = fs.readFileSync('webhook.txt').toString();
 	var token = fs.readFileSync('rad.txt').toString().replace(/(\r\n|\n|\r)/gm,"");
 	var channelNames = getChannelNames(data);
 	request.post(
