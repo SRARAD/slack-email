@@ -11,5 +11,8 @@
     "url": "slack-email"
   },
   "author": "TheConnMan",
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "mailin": "~1.0.1"
+  }
 }
