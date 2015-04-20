@@ -5,36 +5,11 @@ var request = require('request');
 var emailObj = require('mappings.json');
 var defaultUser = emailObj.default;
     
-/* Start the Mailin server. The available options are:
- *  options = {
- *     port: 25,
- *     webhook: 'http://mydomain.com/mailin/incoming,
- *     disableWebhook: false,
- *     logFile: '/some/local/path',
- *     logLevel: 'warn', // One of silly, info, debug, warn, error
- *     smtpOptions: { // Set of options directly passed to simplesmtp.createServer(smtpOptions)
- *        SMTPBanner: 'Hi from a custom Mailin instance'
- *     }
- *  };
- * Here disable the webhook posting so that you can do what you want with the
- * parsed message. */
 mailin.start({
 	port: 25,
-	disableWebhook: true // Disable the webhook posting.
+	disableWebhook: true
 });
 
-/* Event emitted when a connection with the Mailin smtp server is initiated. */
-mailin.on('startMessage', function (connection) {
-		/* connection = {
-			from: 'sender@somedomain.com',
-			to: 'someaddress@yourdomain.com',
-			id: 't84h5ugf',
-			authentication: { username: null, authenticated: false, status: 'NORMAL' }
-		}
-	}; */
-});
-
-/* Event emitted after a message was received and parsed. */
 mailin.on('message', function (connection, data, content) {
 	var token = fs.readFileSync('users/' + getUser(data)).toString().replace(/(\r\n|\n|\r)/gm,"");
 	var channelNames = getChannelNames(data);
