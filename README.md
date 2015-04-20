@@ -15,6 +15,10 @@ Once the server has been created follow the [Mailin install instructions](http:/
 
 Once the **Mailin** dependencies have been met we can setup **Slack-Email**. To begin clone this repo somewhere on the **Mailin** server. You will run the project from the folder it lives in.
 
+#### NPM
+
+To update all **Node.js** dependencies run `npm update --save` in the **Slack-Email** folder.
+
 #### Config
 
 There is an example config file named `config.json.example`. Copy this file to `config.json` and edit it accordingly. Descriptions of the config items are below.

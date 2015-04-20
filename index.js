@@ -1,3 +1,6 @@
+// Slack-Email
+// Version 1.0.1
+
 var mailin = require('mailin');
 var fs = require('fs');
 var request = require('request');
@@ -67,7 +70,7 @@ function postFile(token, data, channelIds) {
 		'https://slack.com/api/files.upload'
 	).form({
 		token: token,
-		content: 'From: ' + data.headers.from + '\nTo: ' + data.headers.to + '\n\n' + data.text,
+		content: 'From: ' + data.headers.from + '\nTo: ' + data.headers.to + '\nCC: ' + data.headers.cc + '\n\n' + data.text,
 		title: data.subject,
 		filetype: 'txt',
 		channels: channelIds.join(',')
