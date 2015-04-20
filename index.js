@@ -11,24 +11,29 @@ mailin.start({
 });
 
 mailin.on('message', function (connection, data, content) {
-	var token = fs.readFileSync('users/' + getUser(data)).toString().replace(/(\r\n|\n|\r)/gm,"");
-	var channelNames = getChannelNames(data);
-	request.post(
-		'https://slack.com/api/channels.list',
-		function (error, response, body) {
-			if (!error && response.statusCode == 200) {
-				var channels = JSON.parse(body).channels;
-				var channelIds = channels.filter(function(d) {
-					return channelNames.indexOf(d.name) != -1;
-				}).map(function(d) {
-					return d.id;
-				});
-				postFile(token, data, channelIds)
+	var user = getUser(data);
+	if (!user) {
+		return null;
+	} else {
+		var token = fs.readFileSync('users/' + user).toString().replace(/(\r\n|\n|\r)/gm,"");
+		var channelNames = getChannelNames(data);
+		request.post(
+			'https://slack.com/api/channels.list',
+			function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+					var channels = JSON.parse(body).channels;
+					var channelIds = channels.filter(function(d) {
+						return channelNames.indexOf(d.name) != -1;
+					}).map(function(d) {
+						return d.id;
+					});
+					postFile(token, data, channelIds)
+				}
 			}
-		}
-	).form({
-		token: token
-	});
+		).form({
+			token: token
+		});
+	}
 });
 
 function getUser(data) {
