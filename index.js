@@ -2,11 +2,8 @@ var mailin = require('mailin');
 var fs = require('fs');
 var request = require('request');
 
-var emailObj = {
-	],
-	]/*,
-	]*/
-};
+var emailObj = require('mappings.json');
+var defaultUser = emailObj.default;
     
 /* Start the Mailin server. The available options are:
  *  options = {
@@ -62,7 +59,7 @@ mailin.on('message', function (connection, data, content) {
 function getUser(data) {
 	var from = data.from[0].address;
 	var usernameArray = Object.keys(emailObj).filter(function(d) {
-		return emailObj[d].indexOf(from.toLowerCase()) != -1;
+		return d != 'default' && emailObj[d].indexOf(from.toLowerCase()) != -1;
 	});
 	if (usernameArray.length == 1) {
 		return usernameArray[0];

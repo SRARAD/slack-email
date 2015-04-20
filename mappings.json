@@ -1,0 +1,10 @@
+{
+	"user1": [
+		"user1@domain.com",
+		"user_one@domain2.com"
+	],
+	"user2": [
+		"userTwo@email.com"
+	],
+	"default": "user1"
+}
