@@ -2,8 +2,8 @@ var mailin = require('mailin');
 var fs = require('fs');
 var request = require('request');
 
-var emailObj = require('mappings.json');
-var defaultUser = emailObj.default;
+var config = require('./config');
+var defaultUser = config.default;
     
 mailin.start({
 	port: 25,
@@ -33,8 +33,8 @@ mailin.on('message', function (connection, data, content) {
 
 function getUser(data) {
 	var from = data.from[0].address;
-	var usernameArray = Object.keys(emailObj).filter(function(d) {
-		return d != 'default' && emailObj[d].indexOf(from.toLowerCase()) != -1;
+	var usernameArray = Object.keys(config.users).filter(function(d) {
+		return config.users[d].indexOf(from.toLowerCase()) != -1;
 	});
 	if (usernameArray.length == 1) {
 		return usernameArray[0];
@@ -49,6 +49,7 @@ function getChannelNames(data) {
 		return d.address
 	});
 	var validEmails = allEmails.filter(function(d) {
+		return d.split('@')[1] == config.domain;
 	});
 	var channelNames = validEmails.map(function(d) {
 		return d.split('@')[0];
