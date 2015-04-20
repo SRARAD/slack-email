@@ -1,3 +1,6 @@
+// Slack-Email
+// Version 1.0.0
+
 var mailin = require('mailin');
 var fs = require('fs');
 var request = require('request');
