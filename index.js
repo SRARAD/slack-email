@@ -39,7 +39,7 @@ mailin.on('startMessage', function (connection) {
 
 /* Event emitted after a message was received and parsed. */
 mailin.on('message', function (connection, data, content) {
-	var token = fs.readFileSync('rad/' + getUser(data)).toString().replace(/(\r\n|\n|\r)/gm,"");
+	var token = fs.readFileSync('users/' + getUser(data)).toString().replace(/(\r\n|\n|\r)/gm,"");
 	var channelNames = getChannelNames(data);
 	request.post(
 		'https://slack.com/api/channels.list',
