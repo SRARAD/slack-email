@@ -1,5 +1,5 @@
 // Slack-Email
-// Version 1.0.1
+// Version 1.0.2
 
 var mailin = require('mailin');
 var fs = require('fs');
@@ -20,22 +20,27 @@ mailin.on('message', function (connection, data, content) {
 	} else {
 		var token = fs.readFileSync('users/' + user).toString().replace(/(\r\n|\n|\r)/gm,"");
 		var channelNames = getChannelNames(data);
-		request.post(
-			'https://slack.com/api/channels.list',
-			function (error, response, body) {
-				if (!error && response.statusCode == 200) {
-					var channels = JSON.parse(body).channels;
-					var channelIds = channels.filter(function(d) {
-						return channelNames.indexOf(d.name) != -1;
-					}).map(function(d) {
-						return d.id;
-					});
-					postFile(token, data, channelIds)
+		try {
+			request.post(
+				'https://slack.com/api/channels.list',
+				function (error, response, body) {
+					if (!error && response.statusCode == 200) {
+						var channels = JSON.parse(body).channels;
+						var channelIds = channels.filter(function(d) {
+							return channelNames.indexOf(d.name) != -1;
+						}).map(function(d) {
+							return d.id;
+						});
+						postFile(token, data, channelIds)
+					}
 				}
-			}
-		).form({
-			token: token
-		});
+			).form({
+				token: token
+			});
+		} catch (e) {
+			console.log('Error receiving channel list');
+			console.log(e);
+		}
 	}
 });
 
@@ -66,13 +71,18 @@ function getChannelNames(data) {
 }
 
 function postFile(token, data, channelIds) {
-	request.post(
-		'https://slack.com/api/files.upload'
-	).form({
-		token: token,
-		content: 'From: ' + data.headers.from + '\nTo: ' + data.headers.to + '\nCC: ' + data.headers.cc + '\n\n' + data.text,
-		title: data.subject,
-		filetype: 'txt',
-		channels: channelIds.join(',')
-	});
+	try {
+		request.post(
+			'https://slack.com/api/files.upload'
+		).form({
+			token: token,
+			content: 'From: ' + data.headers.from + '\nTo: ' + data.headers.to + '\nCC: ' + data.headers.cc + '\n\n' + data.text,
+			title: data.subject,
+			filetype: 'txt',
+			channels: channelIds.join(',')
+		});
+	} catch (e) {
+		console.log('Error posting file');
+		console.log(e);
+	}
 }
