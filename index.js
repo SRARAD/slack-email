@@ -75,7 +75,7 @@ function postFile(token, data, channelIds) {
 			'https://slack.com/api/files.upload'
 		).form({
 			token: token,
-			content: 'From: ' + data.headers.from + '\nTo: ' + data.headers.to + '\nCC: ' + data.headers.cc + '\n\n' + data.text,
+			content: 'From: ' + data.headers.from + '\nTo: ' + data.headers.to + (data.headers.cc ? '\nCC: ' + data.headers.cc : '') + '\n\n' + data.text,
 			title: data.subject,
 			filetype: 'txt',
 			channels: channelIds.join(',')
