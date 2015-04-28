@@ -8,7 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "slack-email"
+    "url": "git@github.com:SRARAD/slack-email.git"
+  },
+  "keywords": [
+    "slack",
+    "email"
+  ],
+  "homepage": "https://github.com/SRARAD/slack-email",
+  "bugs": {
+    "url": "https://github.com/SRARAD/slack-email/issues",
   },
   "author": "SRA International, INC's Rapid Application Development Team",
   "license": "MIT",
