@@ -1,6 +1,6 @@
 {
   "name": "slack-email",
-  "version": "0.0.1",
+  "version": "1.1.0",
   "description": "Slack-Email integration",
   "main": "index.js",
   "scripts": {
@@ -8,10 +8,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "slack-email"
+    "url": "git@github.com:SRARAD/slack-email.git"
   },
-  "author": "TheConnMan",
-  "license": "BSD-2-Clause",
+  "keywords": [
+    "slack",
+    "email"
+  ],
+  "homepage": "https://github.com/SRARAD/slack-email",
+  "bugs": {
+    "url": "https://github.com/SRARAD/slack-email/issues",
+  },
+  "author": "SRA International, INC's Rapid Application Development Team",
+  "license": "MIT",
   "dependencies": {
     "mailin": "~1.0.1"
   }

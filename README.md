@@ -13,7 +13,7 @@ Once the server has been created follow the [Mailin install instructions](http:/
 
 ### Slack-Email
 
-Once the **Mailin** dependencies have been met we can setup **Slack-Email**. To begin clone this repo somewhere on the **Mailin** server. You will run the project from the folder it lives in.
+Once the **Mailin** dependencies have been met we can set up **Slack-Email**. To begin clone this repo somewhere on the **Mailin** server. You will run the project from the folder it lives in.
 
 #### NPM
 
@@ -37,4 +37,8 @@ To run **Slack-Email** navigate to the project directory on your **Mailin** serv
 
 ## Usage
 
-Once your instance has been fully configure using **Slack-Email** is as easy as sending an email to (either explictly in the **To** field or by **CC**ing) [channel]@mydomain.com where [channel] is any channel you have access to. **Slack-Email** will parse out the channel name and share the email body as a plain-text file in that channel
+Once your instance has been fully configured using **Slack-Email** is as easy as sending an email to (either explictly in the **To** field or by **CC**ing) [channel]@mydomain.com where [channel] is any channel you have access to. **Slack-Email** will parse out the channel name and share the email body as a plain-text file in that channel
+
+## License
+
+**Slack-Email** has been released under the MIT license by [SRA International, INC](https://www.sra.com/). It was originally developed specifically for the [SRA Rapid Application Development Team](https://github.com/SRARAD) and early versions contained sensitive information (e.g. email addresses, usernames, domains) which have been sanitized from the Git history. Because of this, it is recommended not to use versions of **Slack-Email** before [v1.0.0](https://github.com/SRARAD/slack-email/releases/tag/v1.0.0).
