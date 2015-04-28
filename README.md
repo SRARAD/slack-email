@@ -13,7 +13,7 @@ Once the server has been created follow the [Mailin install instructions](http:/
 
 ### Slack-Email
 
-Once the **Mailin** dependencies have been met we can setup **Slack-Email**. To begin clone this repo somewhere on the **Mailin** server. You will run the project from the folder it lives in.
+Once the **Mailin** dependencies have been met we can set up **Slack-Email**. To begin clone this repo somewhere on the **Mailin** server. You will run the project from the folder it lives in.
 
 #### NPM
 
