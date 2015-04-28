@@ -37,4 +37,4 @@ To run **Slack-Email** navigate to the project directory on your **Mailin** serv
 
 ## Usage
 
-Once your instance has been fully configure using **Slack-Email** is as easy as sending an email to (either explictly in the **To** field or by **CC**ing) [channel]@mydomain.com where [channel] is any channel you have access to. **Slack-Email** will parse out the channel name and share the email body as a plain-text file in that channel
+Once your instance has been fully configured using **Slack-Email** is as easy as sending an email to (either explictly in the **To** field or by **CC**ing) [channel]@mydomain.com where [channel] is any channel you have access to. **Slack-Email** will parse out the channel name and share the email body as a plain-text file in that channel
