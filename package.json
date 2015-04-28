@@ -1,6 +1,6 @@
 {
   "name": "slack-email",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Slack-Email integration",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   ],
   "homepage": "https://github.com/SRARAD/slack-email",
   "bugs": {
-    "url": "https://github.com/SRARAD/slack-email/issues",
+    "url": "https://github.com/SRARAD/slack-email/issues"
   },
   "author": "SRA International, INC's Rapid Application Development Team",
   "license": "MIT",
