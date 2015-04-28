@@ -10,8 +10,8 @@
     "type": "git",
     "url": "slack-email"
   },
-  "author": "TheConnMan",
-  "license": "BSD-2-Clause",
+  "author": "SRA International, INC's Rapid Application Development Team",
+  "license": "MIT",
   "dependencies": {
     "mailin": "~1.0.1"
   }
