@@ -25,6 +25,7 @@ There is an example config file named `config.json.example`. Copy this file to `
 
 - **users** - This is an email mapping object used to map multiple email addresses to a single user. Create one key for each user you want recognized and place all email alias' of that user in the array. **All emails should be lowercase, Slack-Email lowercases all emails before matching the user.**
 - **default** [Optional] - The default user files get posted as if no matching email address is found. Emails without a matching email address will not be posted if there is no default user.
+- **allowedDomains** [Optional] - An array of allowed domains. Emails from these domains will be posted if there is a **default** user specified as the **default** user.
 - **domain** - The email domain **Slack-Email** will look for on the **To** and **CC** fields.
 
 #### API Keys

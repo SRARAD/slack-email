@@ -5,6 +5,7 @@ var fs = require('fs');
 var request = require('request');
 
 var config = require('./config');
+var allowedDomains = config.allowedDomains || [];
 var defaultUser = config.default;
     
 mailin.start({
@@ -14,7 +15,8 @@ mailin.start({
 
 mailin.on('message', function (connection, data, content) {
 	var user = getUser(data);
-	if (!user) {
+	var valid = isValid(data);
+	if (!user || !valid) {
 		return null;
 	} else {
 		var token = fs.readFileSync('users/' + user).toString().replace(/(\r\n|\n|\r)/gm,"");
@@ -45,14 +47,25 @@ mailin.on('message', function (connection, data, content) {
 
 function getUser(data) {
 	var from = data.from[0].address;
-	var usernameArray = Object.keys(config.users).filter(function(d) {
-		return config.users[d].indexOf(from.toLowerCase()) != -1;
-	});
+	var usernameArray = getUsernameArray(from);
 	if (usernameArray.length == 1) {
 		return usernameArray[0];
 	} else {
 		return defaultUser;
 	}
+}
+
+function isValid(data) {
+	var from = data.from[0].address;
+	var usernameArray = getUsernameArray(from);
+	var domain = from.split('@').pop();
+	return usernameArray.length == 1 || allowedDomains.indexOf(domain) != -1;
+}
+
+function getUsernameArray(from) {
+	return Object.keys(config.users).filter(function(d) {
+		return config.users[d].indexOf(from.toLowerCase()) != -1;
+	});
 }
 
 function getChannelNames(data) {
