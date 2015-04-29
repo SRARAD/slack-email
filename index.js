@@ -21,27 +21,29 @@ mailin.on('message', function (connection, data, content) {
 	} else {
 		var token = fs.readFileSync('users/' + user).toString().replace(/(\r\n|\n|\r)/gm,"");
 		var channelNames = getChannelNames(data);
-		try {
-			request.post(
-				'https://slack.com/api/channels.list',
-				function (error, response, body) {
-					if (!error && response.statusCode == 200) {
-						var channels = JSON.parse(body).channels;
-						var channelIds = channels.filter(function(d) {
-							return channelNames.indexOf(d.name) != -1;
-						}).map(function(d) {
-							return d.id;
-						});
-						postFile(token, data, channelIds)
-					}
+		var options = {
+			url: 'https://slack.com/api/channels.list',
+			timeout: 60000
+		};
+		request.post(
+			options,
+			function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+					var channels = JSON.parse(body).channels;
+					var channelIds = channels.filter(function(d) {
+						return channelNames.indexOf(d.name) != -1;
+					}).map(function(d) {
+						return d.id;
+					});
+					postFile(token, data, channelIds)
+				} else {
+					console.log('Channel list error');
+					console.log(error);
 				}
-			).form({
-				token: token
-			});
-		} catch (e) {
-			console.log('Error receiving channel list');
-			console.log(e);
-		}
+			}
+		).form({
+			token: token
+		});
 	}
 });
 
@@ -83,18 +85,25 @@ function getChannelNames(data) {
 }
 
 function postFile(token, data, channelIds) {
-	try {
-		request.post(
-			'https://slack.com/api/files.upload'
-		).form({
-			token: token,
-			content: 'From: ' + data.headers.from + '\nTo: ' + data.headers.to + (data.headers.cc ? '\nCC: ' + data.headers.cc : '') + '\n\n' + data.text,
-			title: data.subject,
-			filetype: 'txt',
-			channels: channelIds.join(',')
-		});
-	} catch (e) {
-		console.log('Error posting file');
-		console.log(e);
-	}
+	var options = {
+		url: 'https://slack.com/api/files.upload',
+		timeout: 60000
+	};
+	request.post(
+		options,
+		function (error, response, body) {
+			if (!error && response.statusCode == 200) {
+				console.log('File upload successful');
+			} else {
+				console.log('File post error');
+				console.log(error);
+			}
+		}
+	).form({
+		token: token,
+		content: 'From: ' + data.headers.from + '\nTo: ' + data.headers.to + (data.headers.cc ? '\nCC: ' + data.headers.cc : '') + '\n\n' + data.text,
+		title: data.subject,
+		filetype: 'txt',
+		channels: channelIds.join(',')
+	});
 }
