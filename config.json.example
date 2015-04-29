@@ -9,5 +9,6 @@
 		]
 	},
 	"default": "user1",
+	"allowedDomains": ["myotherdomain.com", "anotherdomain.com"],
 	"domain": "subdomain.mydomain.com"
 }
