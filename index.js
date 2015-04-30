@@ -3,6 +3,8 @@
 var mailin = require('mailin');
 var fs = require('fs');
 var request = require('request');
+var https = require('https');
+https.globalAgent.options.secureOptions = require('constants').SSL_OP_NO_TLSv1_2;
 
 var config = require('./config');
 var allowedDomains = config.allowedDomains || [];
@@ -22,8 +24,7 @@ mailin.on('message', function (connection, data, content) {
 		var token = fs.readFileSync('users/' + user).toString().replace(/(\r\n|\n|\r)/gm,"");
 		var channelNames = getChannelNames(data);
 		var options = {
-			url: 'https://slack.com/api/channels.list',
-			timeout: 60000
+			url: 'https://slack.com/api/channels.list'
 		};
 		request.post(
 			options,
@@ -86,8 +87,7 @@ function getChannelNames(data) {
 
 function postFile(token, data, channelIds) {
 	var options = {
-		url: 'https://slack.com/api/files.upload',
-		timeout: 60000
+		url: 'https://slack.com/api/files.upload'
 	};
 	request.post(
 		options,
