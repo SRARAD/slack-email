@@ -36,6 +36,8 @@ To use **Slack-Email** each user needs to obtain a personal API authentication t
 
 To run **Slack-Email** navigate to the project directory on your **Mailin** server and execute `nohup node index.js &` to run the script in the background. The log file will automatically be logged to `nohup` in the same directory.
 
+**NOTE:** Due to an unresolved socket hangup error running the above command will die after a day or two. Please run the included wrapper script with `nohub wrapper.sh &`.
+
 ## Usage
 
 Once your instance has been fully configured using **Slack-Email** is as easy as sending an email to (either explictly in the **To** field or by **CC**ing) [channel]@mydomain.com where [channel] is any channel you have access to. **Slack-Email** will parse out the channel name and share the email body as a plain-text file in that channel
